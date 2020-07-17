@@ -1,0 +1,19 @@
+{
+  "name": "jvjr-docker-env",
+  "version": "1.0.0",
+  "description": "Variables de entorno en docker",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "node scripts/start.js",
+    "install": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "postversion": "node scripts/start.js"
+  },
+  "author": "Juan Nicolau",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "fs": "0.0.1-security",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
