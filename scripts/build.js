@@ -7,16 +7,12 @@ const map = new Map();
 
 if (fs.existsSync(root + '/.env')) {
 
-    function readTextFile(file)
-    {
+    function readTextFile(file) {
         var rawFile = new XMLHttpRequest();
         rawFile.open("GET", file, false);
-        rawFile.onreadystatechange = function ()
-        {
-            if(rawFile.readyState === 4)
-            {
-                if(rawFile.status === 200 || rawFile.status == 0)
-                {
+        rawFile.onreadystatechange = function () {
+            if(rawFile.readyState === 4) {
+                if(rawFile.status === 200 || rawFile.status == 0) {
                     var allText = rawFile.responseText;
                     var lines = allText.split(/\r?\n/);
                     lines.forEach( (line) => {
@@ -34,16 +30,13 @@ if (fs.existsSync(root + '/.env')) {
         rawFile.send(null);
     }
     readTextFile('file://' + root + '/.env');
-    // console.log('The file exists.');
-    // const config = require(root + '/.env');
 
     const object = mapToObj(map);
+
     fs.writeFile("DOCKER_APP_ENV_VARS.json", JSON.stringify(object), 'utf8', function (err) {
         if (err) {
             console.log("An error occured while writing JSON Object to File.");
-            return console.log(err);
         }
-        fs.copyFileSync('../entrypoint.sh', root + '/entrypoint2.sh', fs.constants.COPYFILE_EXCL);
         console.log("JSON file has been saved.");
     });
 

@@ -1,2 +1,3 @@
-import ConfigProvider from "./ConfigProvider";
-export default ConfigProvider;
+const value = require("./ConfigProvider");
+
+module.exports = { value: value.value };

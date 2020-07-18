@@ -3,17 +3,21 @@
   "version": "1.0.0",
   "description": "Variables de entorno en docker",
   "main": "index.js",
+  "typings": "index.d.ts",
   "scripts": {
-    "prestart": "node scripts/start.js",
     "install": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "postversion": "node scripts/start.js"
+    "uninstall": "node scripts/uninstall.js"
   },
   "author": "Juan Nicolau",
   "license": "ISC",
   "dependencies": {
+    "chokidar": "^3.4.1",
     "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "read-last-lines": "^1.7.2",
+    "watch": "^1.0.2",
     "xmlhttprequest": "^1.8.0"
   }
 }
