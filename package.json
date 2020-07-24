@@ -1,7 +1,7 @@
 {
   "name": "jvjr-docker-env",
   "version": "1.0.0",
-  "description": "Variables de entorno en docker",
+  "description": "Environment variables on docker with Vue and React",
   "main": "index.js",
   "typings": "index.d.ts",
   "scripts": {
@@ -9,15 +9,21 @@
     "build": "node scripts/build.js",
     "uninstall": "node scripts/uninstall.js"
   },
+  "bin": {
+    "@juanise/jvjr": "bin/jvjr",
+    "jvjr": "bin/jvjr"
+  },
   "author": "Juan Nicolau",
   "license": "ISC",
   "dependencies": {
-    "chokidar": "^3.4.1",
+    "arg": "^4.1.3",
+    "chalk": "^4.1.0",
     "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
     "fs": "0.0.1-security",
+    "ncp": "^2.0.0",
     "path": "^0.12.7",
-    "read-last-lines": "^1.7.2",
-    "watch": "^1.0.2",
+    "shelljs": "^0.8.4",
     "xmlhttprequest": "^1.8.0"
   }
 }

@@ -1,55 +1,21 @@
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const fs = require('fs');
+const Utils = require('../Utils');
+const utils = new Utils(process.mainModule.paths[0].split('node_modules')[0].slice(0, -1));
 
-const root = process.mainModule.paths[0].split('node_modules')[0].slice(0, -1);
-console.log(root);
-const map = new Map();
 
-if (fs.existsSync(root + '/.env')) {
 
-    function readTextFile(file) {
-        var rawFile = new XMLHttpRequest();
-        rawFile.open("GET", file, false);
-        rawFile.onreadystatechange = function () {
-            if(rawFile.readyState === 4) {
-                if(rawFile.status === 200 || rawFile.status == 0) {
-                    var allText = rawFile.responseText;
-                    var lines = allText.split(/\r?\n/);
-                    lines.forEach( (line) => {
-                        console.log(line);
-                        const appVar = line.substring(0, line.indexOf('='));
+if (fs.existsSync(utils.rootDir + '/.env')) {
 
-                        const useVar = appVar.match(/^VUE_APP_(.*)/)[1];
-                        console.log(useVar);
-                        console.log(appVar);
-                        map.set(useVar, '$' + appVar);
-                    });
-                }
-            }
-        };
-        rawFile.send(null);
-    }
-    readTextFile('file://' + root + '/.env');
-
-    const object = mapToObj(map);
-
-    fs.writeFile("DOCKER_APP_ENV_VARS.json", JSON.stringify(object), 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.");
-        }
-        console.log("JSON file has been saved.");
-    });
+    utils.createDockerVars();
+    copyBuildFiles();
 
 }else {
-    console.log('Error, no se ha encontrado el archivo de variables')
+    console.warn('.env file not found, jvjr-docker-env will do nothing')
 }
 
-function mapToObj(inputMap) {
-    let obj = {};
-
-    inputMap.forEach(function(value, key){
-        obj[key] = value
-    });
-
-    return obj;
+function copyBuildFiles() {
+    utils.copyFileToRoot('./', 'jvjr-entrypoint.sh');
+    // utils.copyFileToRoot(utils.root, '/jvjr-env.json');
 }
+
+

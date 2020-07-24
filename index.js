@@ -1,3 +1,4 @@
-const value = require("./ConfigProvider");
+const EnvProvider = require("./EnvProvider");
 
-module.exports = { value: value.value };
+module.exports = EnvProvider;
+
