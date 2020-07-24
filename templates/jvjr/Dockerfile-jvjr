@@ -5,6 +5,7 @@ COPY package*json ./
 
 COPY .npmrc .
 COPY .yarnrc .
+COPY .env .
 RUN npm install
 COPY . .
 RUN npm run build
@@ -13,7 +14,7 @@ FROM nginx:1.13.12-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 COPY --from=build-stage /app/jvjr-entrypoint.sh /
-COPY jvjr-env.json /
+COPY --from=build-stage /app/jvjr-env.json /
 RUN chmod +x /jvjr-entrypoint.sh
 
 EXPOSE 80

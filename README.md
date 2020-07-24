@@ -1,6 +1,6 @@
 # jvjr-docker-env
 
-Change env variables when run your docker image of your Vue app
+Change env variables when run your docker image of your Vue/React app
 
 ## Installing
 
@@ -8,41 +8,72 @@ Change env variables when run your docker image of your Vue app
 npm install jvjr-docker-env
 ```
 
-This will install jvjr-docker-env as dependency, and will add a Dockerfile-jvjr example, a script jvjr-docker-env.sh and a json file with env variables from .env file into your project base directory.
-Dockerfile-jvjr is a functional Dockerfile example to a basic Vue project, you ca use it as is.
-The script jvjr-docker-env.sh as you can see into Dockerfile-jvjr will be the entrypoint. 
-The json file with env variables will be used by jvjr-docker-env library.
+This will install jvjr-docker-env as dependency, and will add a Dockerfile-jvjr functional example, a script jvjr-entrypoint.sh and jvjr-env.json file with env variables from .env file into your project base directory.
+
+ - Dockerfile-jvjr is a functional Dockerfile example to a basic Vue project, you ca use it as is.
+ - The script jvjr-docker-env.sh as you can see into Dockerfile-jvjr will be the entrypoint. 
+ - The jvjr-env.json file with env variables will be used by jvjr-docker-env library.
+ 
+If you change env file and need to regenerate jvjr-env.json:
+```
+npm run script jvjr-build
+```
+This action will be added to build script on your package.json. 
 
 ## Usage
 If we have this .env file:
 ```
 VUE_APP_WEB_SERVICE=http://192.168.12.28
+VUE_APP_OTHER=http://localhost
 ```
-jvjr-docker-env will generate a json file like this:
+jvjr-docker-env will generate a jvjr-env.json file like this:
 ```
 {
-    "WEB_SERVICE"="$VUE_APP_WEB_SERVICE"
+    "WEB_SERVICE"="$VUE_APP_WEB_SERVICE",
+    "OTHER"="$OTHER"
 }
 ```
 
 So you can use it on your code: 
 
 ```
-import ConfigProvider from 'jvjr-docker-env';
+import EnvProvider from 'jvjr-docker-env';
 
 export default class MyClass {
     private webService: any;
     constructor() {
-        this.webService = ConfigProvider.value('WEB_SERVICE');
+        this.webService = EnvProvider.value('WEB_SERVICE');
     }
 } 
 ```
-And after build your docker image, if you set env var for example on your docker run
+
+Before you build your docker image, probably you need to modify Dockerfile-jvjr file.
+You need to tell jvjr-entrypoint.sh where is dist directory and the prefix of *js file.
+
+For example:
+```
+COPY --from=build-stage /app/<my dist dir> /usr/share/nginx/html
+
+COPY --from=build-stage /app/jvjr-entrypoint.sh /
+COPY --from=build-stage /app/jvjr-env.json /
+RUN chmod +x /jvjr-entrypoint.sh
+
+EXPOSE 80
+
+ENTRYPOINT [ "/jvjr-entrypoint.sh", "/usr/share/nginx/html/<path to js files>", "<prefix of your js files>" ]
+```
+ - \<my dist dir>, used to be 'dist' or 'build'
+ - \<path to js files>, used to be 'js' or 'static/js'
+ - \<prefix of your js files>, used to be 'app' or 'main'
+
+After you build your docker image, if you set env var for example on your docker run
 ```
 docker run -d --name example -e VUE_APP_WEB_SERVICE=locahost example:latest
 ```
-webService value will be localhost.
+then webService value will be localhost.
+
 But if you din't set VUE_APP_WEB_SERVICE, wevService value will be http://192.168.12.28
+
 
 
 

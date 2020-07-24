@@ -4,9 +4,11 @@ import { processScript } from './main';
 function parseArgumentsIntoOptions(rawArgs) {
 	const args = arg(
 		{
+			'--install': Boolean,
 			'--start': Boolean,
 			'--build': Boolean,
 			'--uninstall': Boolean,
+			'-i': '--install',
 			'-s': '--start',
 			'-b': '--build',
 			'-u': '--uninstall',
@@ -16,7 +18,7 @@ function parseArgumentsIntoOptions(rawArgs) {
 		}
 	);
 	return {
-		command: args['--start'] ? 'start' : (args['--build'] ? 'build' : (args['--uninstall'] ? 'uninstall' : 'exit')),
+		command: args['--install'] ? 'install' : (args['--start'] ? 'start' : (args['--build'] ? 'build' : (args['--uninstall'] ? 'uninstall' : 'exit'))),
 		template: 'jvjr'
 	};
 }

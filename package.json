@@ -6,7 +6,6 @@
   "typings": "index.d.ts",
   "scripts": {
     "install": "node scripts/start.js",
-    "build": "node scripts/build.js",
     "uninstall": "node scripts/uninstall.js"
   },
   "bin": {
@@ -22,8 +21,6 @@
     "esm": "^3.2.25",
     "fs": "0.0.1-security",
     "ncp": "^2.0.0",
-    "path": "^0.12.7",
-    "shelljs": "^0.8.4",
-    "xmlhttprequest": "^1.8.0"
+    "path": "^0.12.7"
   }
 }
