@@ -74,7 +74,6 @@ then webService value will be localhost.
 
 But if you din't set VUE_APP_WEB_SERVICE, wevService value will be http://192.168.12.28, which is the one we have into .env file.
  
-
-
+See https://github.com/juanise/jvjr-docker-env-example for a React example.
 
 
