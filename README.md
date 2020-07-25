@@ -48,7 +48,7 @@ export default class MyClass {
 ```
 
 Before you build your docker image, probably you need to modify Dockerfile-jvjr file.
-You need to tell jvjr-entrypoint.sh where is dist directory and the prefix of *js file.
+You need to tell jvjr-entrypoint.sh where is dist directory and the prefix of *js files.
 
 For example:
 ```
@@ -62,17 +62,18 @@ EXPOSE 80
 
 ENTRYPOINT [ "/jvjr-entrypoint.sh", "/usr/share/nginx/html/<path to js files>", "<prefix of your js files>" ]
 ```
- - \<my dist dir>, used to be 'dist' or 'build'
- - \<path to js files>, used to be 'js' or 'static/js'
- - \<prefix of your js files>, used to be 'app' or 'main'
+ - \<my dist dir>, usually 'dist' or 'build'
+ - \<path to js files>, usually 'js' or 'static/js'
+ - \<prefix of your js files>, usually 'app' or 'main'
 
-After you build your docker image, if you set env var for example on your docker run
+After you build your docker image, if you set env var for example in your docker run command line
 ```
 docker run -d --name example -e VUE_APP_WEB_SERVICE=locahost example:latest
 ```
 then webService value will be localhost.
 
-But if you din't set VUE_APP_WEB_SERVICE, wevService value will be http://192.168.12.28
+But if you din't set VUE_APP_WEB_SERVICE, wevService value will be http://192.168.12.28, which is the one we have into .env file.
+ 
 
 
 

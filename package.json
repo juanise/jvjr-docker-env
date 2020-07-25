@@ -12,8 +12,21 @@
     "@juanise/jvjr": "bin/jvjr",
     "jvjr": "bin/jvjr"
   },
-  "author": "Juan Nicolau",
-  "license": "ISC",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/juanise/jvjr-docker-env.git"
+  },
+  "bugs": "https://github.com/juanise/jvjr-docker-env/issues",
+  "keywords": [
+    "Docker",
+    "environment",
+    "variables",
+    "Vue",
+    "React"
+  ],
+  "author": "Juan Nicolau Sepúlveda",
+  "license": "MIT",
+
   "dependencies": {
     "arg": "^4.1.3",
     "chalk": "^4.1.0",
