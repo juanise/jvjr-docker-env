@@ -26,7 +26,6 @@ function parseArgumentsIntoOptions(rawArgs) {
 export async function cli(args) {
     let options = parseArgumentsIntoOptions(args);
     if (options.command !== undefined) {
-        console.log(options);
         await processScript(options);
     }
 }
