@@ -8,6 +8,9 @@
     "install": "node scripts/start.js",
     "uninstall": "node scripts/uninstall.js"
   },
+  "engines": {
+    "node": ">=10"
+  },
   "bin": {
     "@juanise/jvjr": "bin/jvjr",
     "jvjr": "bin/jvjr"
