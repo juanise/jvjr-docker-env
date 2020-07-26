@@ -10,8 +10,8 @@ npm install jvjr-docker-env
 
 This will install jvjr-docker-env as dependency, and will add a Dockerfile-jvjr functional example, a script jvjr-entrypoint.sh and jvjr-env.json file with env variables from .env file into your project base directory.
 
- - Dockerfile-jvjr is a functional Dockerfile example to a basic Vue project, you ca use it as is.
- - The script jvjr-docker-env.sh as you can see into Dockerfile-jvjr will be the entrypoint. 
+ - Dockerfile-jvjr is a functional Dockerfile example to a basic Vue project, you can use it as is.
+ - The script jvjr-entrypont.sh as you can see into Dockerfile-jvjr will be the entrypoint. 
  - The jvjr-env.json file with env variables will be used by jvjr-docker-env library.
  
 If you change env file and need to regenerate jvjr-env.json:
