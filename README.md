@@ -16,7 +16,7 @@ This will install jvjr-docker-env as dependency, and will add a Dockerfile-jvjr 
  
 If you change env file and need to regenerate jvjr-env.json:
 ```
-npm run script jvjr-build
+npm run jvjr-build
 ```
 This action will be added to build script on your package.json. 
 
