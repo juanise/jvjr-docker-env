@@ -1,6 +1,7 @@
 # jvjr-docker-env
 
 Change env variables when run your docker image of your Vue/React app
+Node >= 10
 
 ## Installing
 
