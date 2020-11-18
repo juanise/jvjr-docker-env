@@ -1,6 +1,6 @@
 {
   "name": "jvjr-docker-env",
-  "version": "1.0.1",
+  "version": "1.1.0-alpha",
   "description": "Environment variables on docker with Vue and React",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -16,8 +16,8 @@
     "jvjr": "bin/jvjr"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/juanise/jvjr-docker-env.git"
+    "type": "git",
+    "url": "https://github.com/juanise/jvjr-docker-env.git"
   },
   "bugs": "https://github.com/juanise/jvjr-docker-env/issues",
   "keywords": [
@@ -29,7 +29,6 @@
   ],
   "author": "Juan Nicolau Sepúlveda",
   "license": "MIT",
-
   "dependencies": {
     "arg": "^4.1.3",
     "chalk": "^4.1.0",
