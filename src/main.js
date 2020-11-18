@@ -20,14 +20,11 @@ module.exports.processScript = async function processScript(options) {
         ...options,
         targetDirectory: options.targetDirectory || process.cwd(),
     };
-    // console.log('tagetDirectory', options.targetDirectory);
-    // const currentFileUrl = import.meta.url;
-    const currentFileUrl = path.resolve(__dirname, './main.js');
-    // console.log('currentFile', currentFileUrl);
-    // console.log('dirname',path.resolve(__dirname, './main.js'));
+
+    const pathname = __dirname;
     const templateDir = path.resolve(
-        new URL('file://' + currentFileUrl).pathname,
-        '../../templates',
+        pathname,
+        '../templates',
         options.template.toLowerCase()
     );
     options.templateDirectory = templateDir;
