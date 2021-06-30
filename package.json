@@ -1,6 +1,6 @@
 {
   "name": "jvjr-docker-env",
-  "version": "1.1.0-alpha",
+  "version": "1.1.0-alpha2",
   "description": "Environment variables on docker with Vue and React",
   "main": "index.js",
   "typings": "index.d.ts",
