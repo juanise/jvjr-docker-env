@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -11,7 +11,6 @@ class EnvProvider {
   }
 
   static value(name) {
-    // console.log('Se busca la clave', name);
     if (!(name in this.envVars)) {
       return;
     }
@@ -25,17 +24,17 @@ class EnvProvider {
     if (value.startsWith('$VUE_APP_') || value.startsWith('$REACT_APP_')) {
       const envName = value.substr(1);
       const envValue = process.env[envName];
-      console.log('Valor de entorno devuelto', envValue);
+      // console.log('Valor de entorno devuelto', envValue);
       if (envValue) {
         return envValue;
       } else {
         return;
       }
     } else {
-      console.log('valor introducido', value);
+      // console.log('valor introducido', value);
       return value;
     }
   }
 }
 
-export default EnvProvider;
+module.exports = EnvProvider;

@@ -10,13 +10,13 @@ Node >= 10
 npm install jvjr-docker-env
 ```
 
-This will install jvjr-docker-env as dependency, and will add a Dockerfile-jvjr functional example, a script jvjr-entrypoint.sh and jvjr-env.json file with env variables from .env file into your project base directory.
+This will install jvjr-docker-env as dependency, and will add a Dockerfile-jvjr functional example, a script jvjr-entrypoint.sh and jvjr-env.json file with env variables from .env file into the base directory of your project.
 
- - Dockerfile-jvjr is a functional Dockerfile example to a basic Vue project, you can use it as is.
- - The script jvjr-entrypont.sh as you can see into Dockerfile-jvjr will be the entrypoint. 
+ - Dockerfile-jvjr is a functional Dockerfile example to a basic Vue project, you can use it as it is.
+ - The script jvjr-entrypont.sh (as you can see into Dockerfile-jvjr) will be the entrypoint. 
  - The jvjr-env.json file with env variables will be used by jvjr-docker-env library.
  
-If you change env file and need to regenerate jvjr-env.json:
+If you change the env file and need to regenerate jvjr-env.json:
 ```
 npm run jvjr-build
 ```
@@ -49,8 +49,8 @@ export default class MyClass {
 } 
 ```
 
-Before you build your docker image, probably you need to modify Dockerfile-jvjr file.
-You need to tell jvjr-entrypoint.sh where is dist directory and the prefix of *js files.
+Before you build your docker image, you will probably need to modify Dockerfile-jvjr file.
+You need to tell jvjr-entrypoint.sh where the dist directory is and the prefix of *js files.
 
 For example:
 ```
