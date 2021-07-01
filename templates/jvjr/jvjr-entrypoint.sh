@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "jvjr-entrypoint";
+
 dist_js_dir="$1"; shift
 base_dir="${dist_js_dir%html\/*}"
 if [ ! -z ${base_dir##*/html} ]; then
@@ -24,9 +24,9 @@ if [[ "$dist_js_dir" != "$(echo "$base_dir/$end_path" | sed 's/\/$//g')" ]]; the
 getDefaultPath(){
   indexFile=$(cat $base_dir/index.html)        # sed -n -E "/(src=\/.*\/*$js_file_prefix*)/p" | cut -d'>' -f1)
   DEFAULT_PATH=$(echo $indexFile | tr " " "\n" | sed -n -E "/(src=\"?\/.*\/*$js_file_prefix*)/p" | cut -d'>' -f1)
-  if [[ $DEFAULT_PATH == *"\""* ]]; then
-    DEFAULT_PATH=$(echo $DEFAULT_PATH | sed 's/"//g')
-    QUOTE="yes"
+  if test "${DEFAULT_PATH#*\"}" != "${DEFAULT_PATH}"; then
+    DEFAULT_PATH=$(echo $DEFAULT_PATH | sed 's/"//g');
+    QUOTE="yes";
   fi
 
   DEFAULT_PATH="$(dirname ${DEFAULT_PATH#src=})"
@@ -62,7 +62,7 @@ modifyPublicPath() {
     mv "$base_dir"/* "/tmp/jvjr$PUBLIC_PATH"
     mv "/tmp/jvjr$PUBLIC_PATH" "$base_dir"
 
-    dist_js_dir="$base_dir${PUBLIC_PATH}${dist_js_dir##*/}"
+    dist_js_dir="$base_dir${PUBLIC_PATH}${end_path}"
   fi
 }
 
