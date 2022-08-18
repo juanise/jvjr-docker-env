@@ -202,15 +202,24 @@ function addScripts(scripts, jvjrBuild){
 async function createDockerVars(options) {
     try {
         // console.log(options.targetDirectory);
-        const allText = await readFile(options.targetDirectory + '/.env', 'utf8');
-        // console.log('se lee el fichero .env');
-        const map = createEnvJsonMap(allText);
-        // console.log('Mapa creado de .env', map);
-        const object = mapToObj(map);
-        // console.log('Se transforma a objecto');
-        writeFileSync(options.targetDirectory + '/jvjr-env.json', JSON.stringify(object, null, 2), 'utf8');
+        // Check if .env file exists
+        fs.stat(options.targetDirectory + '/.env', (err, stats) => {
+            if (err) {
+                console.log(chalk.yellow('Could not find ' + options.targetDirectory + '/.env file' ));
+                fs.writeFileSync(options.targetDirectory + '/.env', '');
+                console.log(chalk.yellow('An empty .env file has been generated'));
+            }
+            readFile(options.targetDirectory + '/.env', 'utf8').then((allText) => {
+//                console.log('se lee el fichero .env: ', allText);
+                const map = createEnvJsonMap(allText);
+//                console.log('Mapa creado de .env', map);
+                const object = mapToObj(map);
+//                console.log('Se transforma a objecto');
+                writeFileSync(options.targetDirectory + '/jvjr-env.json', JSON.stringify(object, null, 2), 'utf8');
+            });
+        });
     }catch (e) {
-        console.error('%s An error occured while writing JSON Object to File. Is there any .env file?', chalk.red.bold('ERROR'));
+        console.error('%s An error occured while writing JSON Object to File. %s', chalk.red.bold('ERROR'), chalk.red(e.toString()));
         process.exit(0);
     }
 }
