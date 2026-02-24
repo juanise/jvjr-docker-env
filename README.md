@@ -2,7 +2,7 @@
 
 Change env variables when run your docker image of your Vue/React app
 
-Node >= 10
+Node >= 18
 
 ## Installing
 

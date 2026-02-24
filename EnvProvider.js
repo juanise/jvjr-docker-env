@@ -1,8 +1,24 @@
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
-const VARS = require('../../jvjr-env.json');
+// Read jvjr-env.json from the project root (where it's generated)
+let VARS = {};
+try {
+  const projectRoot = process.cwd();
+  const envJsonPath = path.join(projectRoot, 'jvjr-env.json');
+  if (fs.existsSync(envJsonPath)) {
+    VARS = JSON.parse(fs.readFileSync(envJsonPath, 'utf8'));
+  }
+} catch (e) {
+  // File doesn't exist yet, will be created during install
+}
 
 class EnvProvider {
 
@@ -37,4 +53,4 @@ class EnvProvider {
   }
 }
 
-module.exports = EnvProvider;
+export default EnvProvider;

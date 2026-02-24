@@ -1,8 +1,13 @@
-const chalk = require('chalk');
-const fs  = require('fs');
-const ncp = require('ncp');
-const path = require('path');
-const { promisify }  = require('util');
+import chalk from 'chalk';
+import fs from 'fs';
+import ncp from 'ncp';
+import path from 'path';
+import { promisify } from 'util';
+import { fileURLToPath } from 'url';
+import { createEnvJsonMap, mapToObj, addScripts, removeScripts } from './utils.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const access = promisify(fs.access);
 const readFile = promisify(fs.readFile);
@@ -15,7 +20,7 @@ async function copyTemplateFiles(options) {
     });
 }
 
-module.exports.processScript = async function processScript(options) {
+export async function processScript(options) {
     options = {
         ...options,
         targetDirectory: options.targetDirectory || process.cwd(),
@@ -145,7 +150,7 @@ Object.prototype.hasOwnNestedProperty = function(propertyPath){
 
 function editPackageJSON(options, addOrDelete) {
     const jvjrBuild = 'jvjr --build';
-    var packageJson = require(options.targetDirectory + '/package.json');
+    var packageJson = JSON.parse(fs.readFileSync(options.targetDirectory + '/package.json', 'utf8'));
     var { scripts } = packageJson;
     if (scripts) {
         if (addOrDelete === 'append') {
@@ -167,93 +172,28 @@ function deleteProjectFiles(options) {
     deleteFileIfExistsOnRoot(options, 'jvjr-env.json');
 }
 
-function removeScripts(scripts, jvjrBuild) {
-    console.log('Removing scripts from package.json');
-    if (scripts.hasOwnProperty('build')) {
-        var build = scripts.build;
-        var regex = new RegExp(`(${jvjrBuild})(\\s+&&\\s+)?`, 'g');
-        // console.log(regex);
-        // console.log(build.match(regex));
-        build = build.replace(regex, '');
-        scripts.build = build;
-        if (build.length <= 0) {
-            delete scripts.build;
-        }
-    }
-    delete scripts['jvjr-build'];
-    return scripts;
-
-
-}
-
-function addScripts(scripts, jvjrBuild){
-    if (scripts.hasOwnProperty('build') && scripts.build.trim().length > 0) {
-        if (!scripts.build.includes(jvjrBuild)) {
-            const build = scripts.build;
-            scripts.build = jvjrBuild + ' && ' + build;
-        }
-    } else {
-        scripts.build = jvjrBuild;
-    }
-    scripts['jvjr-build'] = jvjrBuild;
-    return scripts;
-}
-
 async function createDockerVars(options) {
     try {
-        // console.log(options.targetDirectory);
-        // Check if .env file exists
-        fs.stat(options.targetDirectory + '/.env', (err, stats) => {
-            if (err) {
-                console.log(chalk.yellow('Could not find ' + options.targetDirectory + '/.env file' ));
-                fs.writeFileSync(options.targetDirectory + '/.env', '');
-                console.log(chalk.yellow('An empty .env file has been generated'));
-            }
-            readFile(options.targetDirectory + '/.env', 'utf8').then((allText) => {
-//                console.log('se lee el fichero .env: ', allText);
-                const map = createEnvJsonMap(allText);
-//                console.log('Mapa creado de .env', map);
-                const object = mapToObj(map);
-//                console.log('Se transforma a objecto');
-                writeFileSync(options.targetDirectory + '/jvjr-env.json', JSON.stringify(object, null, 2), 'utf8');
-            });
-        });
+        const envPath = options.targetDirectory + '/.env';
+
+        // Check if .env file exists, create empty if not
+        if (!fs.existsSync(envPath)) {
+            console.log(chalk.yellow('Could not find ' + envPath + ' file' ));
+            fs.writeFileSync(envPath, '');
+            console.log(chalk.yellow('An empty .env file has been generated'));
+        }
+
+        // Read .env and create jvjr-env.json
+        const allText = await readFile(envPath, 'utf8');
+        const map = createEnvJsonMap(allText);
+        const object = mapToObj(map);
+        writeFileSync(options.targetDirectory + '/jvjr-env.json', JSON.stringify(object, null, 2), 'utf8');
     }catch (e) {
         console.error('%s An error occured while writing JSON Object to File. %s', chalk.red.bold('ERROR'), chalk.red(e.toString()));
         process.exit(0);
     }
 }
 
-function createEnvJsonMap(allText) {
-    const map = new Map();
-    var lines = allText.split(/\r?\n/);
-    // console.log(allText);
-    lines.forEach((line) => {
-        if (!line.startsWith('#') && line.includes('=')) {
-            // console.log(line);
-            const appVar = line.substring(0, line.indexOf('='));
-            var regex = line.startsWith('VUE_APP_') ? /^VUE_APP_(.*)/ :
-                (line.startsWith('REACT_APP_') ? /^REACT_APP_(.*)/ : /.*/);
-
-            const expRes = appVar.match(regex);
-            const useVar = expRes[1] || expRes[0];
-            // console.log(useVar);
-            // console.log(appVar);
-            map.set(useVar, '$' + appVar);
-        }
-    });
-    return map;
-}
-
-function mapToObj(inputMap) {
-    let obj = {};
-
-    inputMap.forEach(function(value, key){
-        obj[key] = value
-    });
-
-    return obj;
-}
 function deleteFileIfExistsOnRoot (options, file) {
     var pathFile = options.targetDirectory + '/' + file;
     if (fs.existsSync(pathFile)) {

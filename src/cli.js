@@ -1,5 +1,5 @@
 import arg from 'arg';
-import { processScript } from './main';
+import { processScript } from './main.js';
 
 function parseArgumentsIntoOptions(rawArgs) {
 	const args = arg(

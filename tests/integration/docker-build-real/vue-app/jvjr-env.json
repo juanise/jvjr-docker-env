@@ -1,0 +1,5 @@
+{
+  "API_URL": "$VUE_APP_API_URL",
+  "TITLE": "$VUE_APP_TITLE",
+  "VERSION": "$VUE_APP_VERSION"
+}
