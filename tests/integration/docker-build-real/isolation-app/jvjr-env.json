@@ -1,0 +1,4 @@
+{
+  "SECRET": "$VUE_APP_SECRET",
+  "PUBLIC": "$VUE_APP_PUBLIC"
+}

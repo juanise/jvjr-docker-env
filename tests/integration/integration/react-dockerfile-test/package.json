@@ -1,0 +1,8 @@
+{
+  "name": "react-test-app",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "jvjr --build && react-scripts build",
+    "jvjr-build": "jvjr --build"
+  }
+}

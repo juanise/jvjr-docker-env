@@ -14,8 +14,6 @@ COPY package*json ./
 # Optional: custom registry/auth config managed by jvjr --start.
 # These lines are removed automatically by jvjr if the files do not exist
 # in the project root, keeping the image clean.
-COPY .npmrc .
-COPY .yarnrc .
 
 # Copy .env so jvjr --build (called inside npm run build) can generate
 # jvjr-env.json with the variable mapping for runtime substitution.
@@ -28,7 +26,6 @@ COPY . .
 
 # Produces /app/dist (static assets) and /app/jvjr-env.json (var mapping).
 RUN npm run build
-
 
 # =============================================================================
 # STAGE 2 — Production

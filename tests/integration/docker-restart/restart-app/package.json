@@ -1,0 +1,8 @@
+{
+  "name": "restart-test-app",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "sh build.sh",
+    "jvjr-build": "jvjr --build"
+  }
+}

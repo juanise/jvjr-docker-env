@@ -1,4 +1,3 @@
-const EnvProvider = require("./EnvProvider");
+import EnvProvider from "./EnvProvider.js";
 
-module.exports = EnvProvider;
-
+export default EnvProvider;
