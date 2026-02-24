@@ -16,6 +16,17 @@
   "engines": {
     "node": ">=18 <25"
   },
+  "files": [
+    "bin/",
+    "src/",
+    "scripts/",
+    "templates/",
+    "index.js",
+    "index.d.ts",
+    "EnvProvider.js",
+    "README.md",
+    "LICENSE"
+  ],
   "bin": {
     "@juanise/jvjr": "bin/jvjr",
     "jvjr": "bin/jvjr"
